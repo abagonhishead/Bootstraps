@@ -11,6 +11,7 @@ $Host.ui.PromptForChoice($caption, $message, $choicedesc, $default)
 
 Write-output "`r`n`r`nQuick Config by Darwin (CSI-Windows.com)...`r`n`r`n"
 Write-output "Gets Powershell 5 onto your system and optionally installs all the latest DSC Resource Kit Modules"
+Write-output "ATTENTION, Updated to PSH version 5.0.10514.6 (Production Preview) on 9/2/2015"
 
 "Getting Started..." | out-default
 
