@@ -2,7 +2,7 @@
 $Description = "Gets Powershell 5 onto your system and optionally installs all the latest DSC Resource Kit Modules"
 $Changes = @"
 
-Note: After any restarts initiated by the script, you must kick off the script again.
+  NOTE: After any restarts initiated by the script, you must kick off the script again.
 
   [1] Sets PowerShell Execution Policy to "RemoteSigned"
   [2] Installs .NET 4.5.1 if not present
