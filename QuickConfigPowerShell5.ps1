@@ -3,8 +3,8 @@ $Description = "Gets Powershell 5 onto your system and optionally installs all t
 $Changes = @"
   [1] Sets PowerShell Execution Policy to "RemoteSigned"
   [2] Installs .NET 4.5.1 if not present
-  [3] Install WMF 4 preequisite (Win 7 / Server 2008 R2 ONLY) if not present [Restart then re-run]
-  [4] Updates to PSH version 5.0.10514.6 (Production Preview) on 9/2/2015 [Restart then re-run]
+  [3] Install WMF 4 preequisite (Win 7 / Server 2008 R2 ONLY) if not present [Restart,then re-run this script]
+  [4] Updates to PSH version 5.0.10514.6 (Production Preview 8/31/2015) [Restarts, then re-run this script]
   [5] Offers to install entire DSC resource kit (for testing).
 "@
 
