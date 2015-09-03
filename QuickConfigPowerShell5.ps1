@@ -1,4 +1,25 @@
 
+$Description = "Gets Powershell 5 onto your system and optionally installs all the latest DSC Resource Kit Modules"
+$Changes = @"
+  [1] Sets PowerShell Execution Policy to "RemoteSigned"
+  [2] Installs .NET 4.5.1 if not present
+  [3] Install WMF 4 preequisite (Win 7 / Server 2008 R2 ONLY) if not present [Restart then re-run]
+  [4] Updates to PSH version 5.0.10514.6 (Production Preview) on 9/2/2015 [Restart then re-run]
+  [5] Offers to install entire DSC resource kit (for testing).
+"@
+
+clear-host
+Write-output "****************************************************"
+Write-output "Quick Config by Darwin (CSI-Windows.com)..."
+Write-output $Description
+Write-output "Changes to be made:"
+Write-output $Changes
+Write-output "****************************************************"
+
+Function Test-ProcHasAdmin {Return [bool](([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")}
+If (!(Test-ProcHasAdmin))
+  {Throw "You must be running as an administrator, please restart as administrator"}
+
 Function Console-Prompt {
   Param( [String[]]$choiceList,[String]$Caption = "Please make a selection",[String]$Message = "Choices are presented below",[int]$default = 0 )
 $choicedesc = New-Object System.Collections.ObjectModel.Collection[System.Management.Automation.Host.ChoiceDescription] 
@@ -9,9 +30,13 @@ $choicedesc.Add((New-Object "System.Management.Automation.Host.ChoiceDescription
 $Host.ui.PromptForChoice($caption, $message, $choicedesc, $default) 
 }
 
-Write-output "`r`n`r`nQuick Config by Darwin (CSI-Windows.com)...`r`n`r`n"
-Write-output "Gets Powershell 5 onto your system and optionally installs all the latest DSC Resource Kit Modules"
-Write-output "ATTENTION, Updated to PSH version 5.0.10514.6 (Production Preview) on 9/2/2015"
+Switch (Console-Prompt -Caption "Proceed?" -Message "Running this script will make the above changes, proceed?" -choice "&Yes=Yes", "&No=No" -default 1)
+  {
+  1 {
+    Write-Warning "Installation was exited by user."
+    Exit
+    }
+  }
 
 "Getting Started..." | out-default
 
@@ -48,7 +73,7 @@ If (([version]$os.version -ge [version]"6.1.7601") -AND ([version]$os.version -l
   {
   If ($PSVersionTable.PSVersion -lt [Version]'4.0')
     {
-    Write-Warning "For the time being, Windows 7 SP1 and Server 2008 R2 SP1 must have PowerShell 4 installed before installing version 5"  
+    Write-Warning " Windows 7 SP1 and Server 2008 R2 SP1 must have PowerShell 4 installed before installing version 5"  
     Write-Warning "Installing PowerShell version 4 and rebooting..."
     Write-Warning "Please re-run this script after the reboot."
     cinst -y PowerShell -version 4.0.20141001
