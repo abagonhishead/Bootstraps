@@ -34,6 +34,7 @@ Switch (Console-Prompt -Caption "Proceed?" -Message "Running this script will ma
   {
   1 {
     Write-Warning "Installation was exited by user."
+    Pause
     Break
     }
   }
