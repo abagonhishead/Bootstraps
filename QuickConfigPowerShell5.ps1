@@ -8,7 +8,8 @@ $Changes = @"
   [2] Installs .NET 4.5.1 if not present
   [3] Install WMF 4 preequisite (Win 7 / Server 2008 R2 ONLY) if not present [Restarts]
   [4] Updates to PSH version 5.0.10514.6 (Production Preview 8/31/2015) [Restarts]
-  [5] Offers to install entire DSC resource kit (for testing).
+  [4] Installs PSReadline module which ships preinstalled with Windows 10 WMF 5
+  [6] Offers to install entire DSC resource kit (for testing).
 "@
 
 clear-host
@@ -98,6 +99,10 @@ If (([version]$os.version -ge [version]"6.1.7601") -AND ([version]$os.version -l
 
   If ([Version]$PSVersionTable.PSVersion -ge [Version]'5.0')
     {
+
+     Get-PackageProvider -Name NuGet -ForceBootstrap | out-null
+     Install-Module -Name PSReadline -Scope AllUsers -Force
+     Write-Output "Installed PSReadline from PowerShellGallery.com to match Windows 10 PowerShell 5 shipped configuration."
 
   Switch (Console-Prompt -Caption "Install all the latest DSC Resources from PowerShellGallery.com?" -Message "Do you wish to Install the DSC Resource Kit?" -choice "&Yes=Yes", "&No=No" -default 0)
     {
